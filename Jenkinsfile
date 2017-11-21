@@ -3,8 +3,8 @@ pipeline {
     stages {
         stage('NuGet') {
             steps {
-              bat 'echo "Building solution"'
-              bat pipeline/nuget.bat
+              bat 'echo "Nuget section"'
+              bat 'pipeline/nuget.bat'
               }
         }
         stage('MsBuild') {
