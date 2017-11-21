@@ -3,11 +3,23 @@ pipeline {
     stages {
         stage('scm') {
             steps {
-                bat 'echo "Hello World"'
+                bat 'echo "Checking out project"'
                 bat '''
-                    echo "Multiline shell steps works too"
+                    echo "Inspect contents"
                     dir
                 '''
+            }
+        }
+        stage('build') {
+            steps {
+                bat 'echo "Building solution"'
+                bat 'echo "Done"'
+            }
+        }
+        stage('test') {
+            steps {
+                bat 'echo "executing tests"'
+                bat 'echo "Done"'
             }
         }
     }
