@@ -1,9 +1,13 @@
 pipeline {
     agent any
     stages {
-        stage 'Checkout' {
+        stage('scm') {
             steps {
-                bat 'echo checkout'
+                bat 'echo "Hello World"'
+                bat '''
+                    echo "Multiline shell steps works too"
+                    dir
+                '''
             }
         }
     }
