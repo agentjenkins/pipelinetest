@@ -1,16 +1,13 @@
 pipeline {
     agent any
     stages {
-        stage('scm') {
+        stage('NuGet') {
             steps {
-                bat 'echo "Checking out project"'
-                bat '''
-                    echo "Inspect contents"
-                    dir
-                '''
-            }
+              bat 'echo "Building solution"'
+              bat pipeline/nuget.bat
+              }
         }
-        stage('build') {
+        stage('MsBuild') {
             steps {
                 bat 'echo "Building solution"'
                 bat 'echo "Done"'
