@@ -1,5 +1,5 @@
-timestamps {
 pipeline {
+timestamps {
     agent any
     stages {
         stage('NuGet') {
