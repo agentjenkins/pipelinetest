@@ -1,3 +1,4 @@
+timestamps {
 pipeline {
     agent any
     stages {
@@ -20,4 +21,5 @@ pipeline {
             }
         }
     }
+}
 }
