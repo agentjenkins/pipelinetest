@@ -1,12 +1,13 @@
 pipeline {
     agent any
     stages {
+        timestamps {
         stage('NuGet') {
             steps {
-            timestamps {
+
               bat 'echo "Nuget section"'
               bat 'pipeline/nuget.bat'
-              }
+
               }
         }
         stage('MsBuild') {
@@ -20,6 +21,7 @@ pipeline {
                 bat 'echo "executing tests"'
                 bat 'echo "Done"'
             }
+        }
         }
     }
 }
