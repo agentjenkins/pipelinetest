@@ -7,22 +7,24 @@ pipeline {
             steps {
               timestamps {
               bat 'echo "Nuget section"'
-              bat 'pipeline/nuget.bat'
-
               }
+              timestamps {
+              bat 'pipeline/nuget.bat'
               }
         }
         stage('MsBuild') {
             steps {
                 timestamps {
                 bat 'echo "Building solution"'
+                }
                 bat 'echo "Done"'
-            }
+
             }
         }
         stage('test') {
-            timestamps {
+
             steps {
+            timestamps {
                 bat 'echo "executing tests"'
                 bat 'echo "Done"'
             }
