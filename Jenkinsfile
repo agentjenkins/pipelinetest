@@ -7,7 +7,7 @@ pipeline {
 
             steps {
               timestamps {
-              bat 'sleep 10000'
+              timeout 10
               }
               timestamps {
               bat 'pipeline/nuget.bat'
