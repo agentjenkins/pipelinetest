@@ -1,14 +1,8 @@
 pipeline {
       agent any
 
-  throttle(['master']) {
-      node() {
-          sh "sleep 500"
-          echo "Done"
-      }
-  }
-
-    stages {
+      checkout scm
+      stages {
 
         stage('NuGet') {
 
