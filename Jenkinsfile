@@ -1,12 +1,15 @@
 pipeline {
-    agent any
+    throttle{
+      agent any
+    }
+
     stages {
 
         stage('NuGet') {
 
             steps {
               timestamps {
-              bat 'echo "Nuget section"'
+              bat 'sleep 10000'
               }
               timestamps {
               bat 'pipeline/nuget.bat'
