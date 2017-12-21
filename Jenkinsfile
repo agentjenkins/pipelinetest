@@ -1,6 +1,7 @@
 pipeline {
-    throttle{
       agent any
+    throttle{
+    
     }
 
     stages {
