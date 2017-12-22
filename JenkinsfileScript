@@ -1,0 +1,17 @@
+  node() {
+        checkout scm
+        stage('NuGet') {
+
+              timestamps {
+               bat 'echo nuget'
+              sleep(2)
+              }
+        }
+
+        stage('test') {
+            timestamps {
+                bat 'echo "executing tests"'
+                sleep(5);
+                }
+        }
+    }
