@@ -1,6 +1,9 @@
+#!/usr/bin/env groovy
+
 pipeline {
       agent any
 
+      checkout scm $env.BRANCH_NAME
       stages {
 
         stage('NuGet') {
