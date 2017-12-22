@@ -3,9 +3,13 @@
 pipeline {
       agent any
 
-      checkout scm $env.BRANCH_NAME
       stages {
+        stage('Source control') {
+          steps {
+          checkout scm $env.BRANCH_NAME
+          }
 
+        }
         stage('NuGet') {
 
             steps {
