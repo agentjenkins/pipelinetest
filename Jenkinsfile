@@ -4,7 +4,7 @@ pipeline {
       agent any
 
       stages {
-        stage('Source controls') {
+        stage('Source controls dwd') {
           steps {
             checkout scm $env.BRANCH_NAME
           }
