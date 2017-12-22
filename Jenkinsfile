@@ -4,9 +4,9 @@ pipeline {
       agent any
 
       stages {
-        stage('Source control') {
+        stage('Source controls') {
           steps {
-          checkout scm $env.BRANCH_NAME
+            checkout scm $env.BRANCH_NAME
           }
 
         }
