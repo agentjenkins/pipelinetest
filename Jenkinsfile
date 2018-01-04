@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 pipeline {
-      agent anycx
+      agent any
 
       stages {
         stage('Source controls dwd') {
