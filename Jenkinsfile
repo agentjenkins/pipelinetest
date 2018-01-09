@@ -39,6 +39,7 @@ pipeline {
             }
         }
         }
+        post {
         success {
         slackSend channel: "#ddm-jenkins",
                   color: "good",
@@ -49,5 +50,6 @@ pipeline {
                   color: "good",
                   message: "Build success on jenkins: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
         }
-    
+        }
+
 }
