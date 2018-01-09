@@ -7,7 +7,7 @@ pipeline {
       stages {
         stage('Source controls dwd') {
           steps {
-            echo checkout $env.BRANCH_NAME
+            echo 'geh'
           }
 
         }
