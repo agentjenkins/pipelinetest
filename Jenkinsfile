@@ -7,7 +7,7 @@ pipeline {
       stages {
         stage('Source controls dwd') {
           steps {
-            checkout scm $env.BRANCH_NAME
+            echo checkout $env.BRANCH_NAME
           }
 
         }
