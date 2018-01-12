@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 pipeline {
-
+      currentBuild.description = "my new description"
       agent any
 
       stages {
