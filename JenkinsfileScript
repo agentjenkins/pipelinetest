@@ -1,3 +1,4 @@
+try {
   node() {
         checkout scm
         currentBuild.description = "my new description"
@@ -15,4 +16,11 @@
                 sleep(5);
                 }
         }
+    }
+    }
+    catch {
+      bat 'echo failure'
+    }
+    finally {
+      bat 'echo success'
     }
