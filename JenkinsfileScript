@@ -12,12 +12,12 @@ try {
 
         stage('test') {
             timestamps {
-                bat 'echo "executing tests"'
+                bat 'echos "executing tests"'
                 sleep(5);
                 }
         }
 
-        stage('success') {
+        stage('WrapUp') {
             timestamps {
                 bat 'echo "Success"'
                 sleep(1);
