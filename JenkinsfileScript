@@ -16,11 +16,16 @@ try {
                 sleep(5);
                 }
         }
+
+        stage('success') {
+            timestamps {
+                bat 'echo "Success"'
+                sleep(1);
+                }
+        }
+
     }
     }
-    catch {
+    catch  (err) {
       bat 'echo failure'
-    }
-    finally {
-      bat 'echo success'
     }
