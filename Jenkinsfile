@@ -1,7 +1,6 @@
 #!/usr/bin/env groovy
 
 pipeline {
-      currentBuild.description = "my new description"
       agent any
 
       stages {
@@ -10,6 +9,11 @@ pipeline {
             echo 'geh'
           }
 
+        }
+        stage('Prepare') {
+          steps {
+            currentBuild.description = "my new description"
+          }
         }
         stage('NuGet') {
 
