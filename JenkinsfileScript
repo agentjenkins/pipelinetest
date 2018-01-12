@@ -1,37 +1,37 @@
 
-#!groovy
+#!/usr/bin/env groovy
+
+  node() {
 
   currentBuild.result = "SUCCESS"
 
-try {
-  node() {
+  try {
+      currentBuild.description = "my new description"
+
+      stage('Checkout') {
         checkout scm
-        currentBuild.description = "my new description"
-        stage('NuGet') {
-
-              timestamps {
-               bat 'echo nuget'
-              sleep(2)
-              }
-        }
-
-        stage('test') {
-            timestamps {
-                bat 'echos "executing tests"'
-                sleep(5);
-                }
-        }
-
-        stage('WrapUp') {
-            timestamps {
-                bat 'echo "Success"'
-                sleep(1);
-                }
-        }
-
-    }
+      }
+      stage('NuGet') {
+        timestamps {
+           bat 'echo nuget'
+           sleep(2)
+          }
+     }
+     stage('test') {
+        timestamps {
+          bat 'echos "executing tests"'
+          sleep(5);
+            }
+      }
+      stage('WrapUp') {
+        timestamps {
+            bat 'echo "Success"'
+            sleep(1);
+          }
+     }
     }
     catch  (err) {
       currentBuild.result = "FAILURE"
       bat 'echo failure'
     }
+  }
