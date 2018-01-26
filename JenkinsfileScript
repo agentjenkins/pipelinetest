@@ -15,9 +15,9 @@
            bat 'exitcodes.bat'
         }
         catch (err) {
-            println("env", env)
-            println("currentbuild", currentBuild)
-
+        echo env
+        echo currentBuild
+        echo err;
         }
      }
     stage('WrapUp') {
@@ -28,9 +28,9 @@
      }
     }
     catch  (err) {
-     println(env)
-     println(currentBuild)
-      println(err);
+      echo env
+      echo currentBuild
+      echo err;
       currentBuild.result = "FAILURE"
     }
   }
