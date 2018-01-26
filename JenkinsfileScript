@@ -11,9 +11,12 @@
         checkout scm
       }
       stage('NuGet') {
-        timestamps {
+        try {
            bat 'exitcodes.bat'
-          }
+        }
+        catch (err) {
+           if (EXIC)
+        }
      }
     stage('WrapUp') {
         timestamps {
@@ -23,8 +26,9 @@
      }
     }
     catch  (err) {
+     println(env)
+     println(currentBuild)
       println(err);
       currentBuild.result = "FAILURE"
-      bat 'echo failure'
     }
   }
