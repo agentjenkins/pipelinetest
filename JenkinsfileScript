@@ -12,9 +12,7 @@
       }
       stage('NuGet') {
         timestamps {
-           bat 'echo nuget'
-           sleep(2)
-           exit 1
+           bat exitcodes.bat           
           }
      }
      stage('test') {
