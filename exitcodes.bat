@@ -1,4 +1,4 @@
 ECHO ========== Start anaysis of NCover Data ==========
 cd "%WORKSPACE%\Binaries\UnitTests"
-exit 3
+exit3.bat
 ECHO ========== Anaysis of NCover Data finished ==========
