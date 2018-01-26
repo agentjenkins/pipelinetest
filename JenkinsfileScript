@@ -12,7 +12,7 @@
       }
       stage('NuGet') {
         timestamps {
-           bat exitcodes.bat           
+           bat exitcodes.bat
           }
      }
      stage('test') {
@@ -29,6 +29,7 @@
      }
     }
     catch  (err) {
+      println(err);
       currentBuild.result = "FAILURE"
       bat 'echo failure'
     }
