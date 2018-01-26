@@ -12,14 +12,14 @@
       }
       stage('NuGet') {
         timestamps {
-           bat exitcodes.bat
+           bat 'exitcodes.bat'
           }
      }
      stage('test') {
         timestamps {
           bat 'echos "executing tests"'
           sleep(5);
-            }
+        }
       }
       stage('WrapUp') {
         timestamps {
