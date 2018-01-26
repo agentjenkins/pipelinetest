@@ -15,13 +15,7 @@
            bat 'exitcodes.bat'
           }
      }
-     stage('test') {
-        timestamps {
-          bat 'echos "executing tests"'
-          sleep(5);
-        }
-      }
-      stage('WrapUp') {
+    stage('WrapUp') {
         timestamps {
             bat 'echo "Success"'
             sleep(1);
