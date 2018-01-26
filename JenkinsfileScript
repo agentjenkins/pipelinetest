@@ -15,7 +15,9 @@
            bat 'exitcodes.bat'
         }
         catch (err) {
-           if (EXIC)
+            println("env", env)
+            println("currentbuild", currentBuild)
+
         }
      }
     stage('WrapUp') {
