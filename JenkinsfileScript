@@ -15,7 +15,8 @@
            bat 'exitcodes.bat'
         }
         catch (err) {
-        echo env
+        echo "caught execption"
+        println env
         echo currentBuild
         echo err;
         }
