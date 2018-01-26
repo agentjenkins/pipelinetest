@@ -16,8 +16,7 @@
         }
         catch (err) {
         echo "caught execption"
-        println env
-        echo currentBuild
+        println currentBuild
         echo err;
         }
      }
