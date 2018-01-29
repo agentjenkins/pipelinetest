@@ -16,7 +16,7 @@
         }
         catch (err) {
         echo "caught execption"
-        println currentBuild.exitCode
+        println currentBuild.toString()
         echo err;
         }
      }
