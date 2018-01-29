@@ -8,3 +8,4 @@ IF %ERRORLEVEL% EQU 3 (
   ECHO "Ncover reporting failed"
 )
 ECHO ========== Anaysis of NCover Data finished ==========
+EXIT %ERRORLEVEL%
