@@ -30,7 +30,7 @@
     catch  (err) {
       echo env.toString()
       echo currentBuild.toString()
-      echo err;
+      echo err.message;
       currentBuild.result = "FAILURE"
     }
   }
