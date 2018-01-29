@@ -16,7 +16,8 @@
         }
         catch (err) {
         echo "caught execption"
-        echo err.message;
+        if (err.message == "script returned exit code 3")
+          currentBuild.result = "UNSTABLE"
         }
      }
     stage('WrapUp') {
