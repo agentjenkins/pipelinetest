@@ -1,4 +1,3 @@
-ECHO OFF
 ECHO ========== Start anaysis of NCover Data ==========
 cd "%WORKSPACE%\Binaries\UnitTests"
 "C:\Program Files (x86)\NCover\NCover.Reporting.exe" //cr "%WORKSPACE%\Build\DDM.build.Verification.NCoverReporting.config"
