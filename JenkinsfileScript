@@ -21,6 +21,7 @@
           else {
              echo "Exception in ncover reporting"
              currentBuild.result = "FAILURE"
+             throw err
           }
         }
      }
