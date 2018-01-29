@@ -16,8 +16,7 @@
         }
         catch (err) {
         echo "caught execption"
-        //println currentBuild.toString()
-        echo err;
+        echo err.message;
         }
      }
     stage('WrapUp') {
