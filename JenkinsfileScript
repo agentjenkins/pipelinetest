@@ -17,7 +17,11 @@
         catch (err) {
         echo "caught execption"
         if (err.message == "script returned exit code 3")
-          currentBuild.result = "UNSTABLE"
+             currentBuild.result = "UNSTABLE"
+          else {
+             echo "Exception in ncover reporting"
+             currentBuild.result = "FAILURE"
+          }
         }
      }
     stage('WrapUp') {
