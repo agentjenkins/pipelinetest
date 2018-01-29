@@ -1,9 +1,8 @@
-ECHO ========== Start anaysis of NCover Data ==========
 ECHO OFF
+ECHO ========== Start anaysis of NCover Data ==========
 cd "%WORKSPACE%\Binaries\UnitTests"
-ECHO "The ERRORLEVEL IS %ERRORLEVEL%"
-SET ERRORLEVEL=3
-IF %ERRORLEVEL% EQU 3 (
+"C:\Program Files (x86)\NCover\NCover.Reporting.exe" //cr "%WORKSPACE%\Build\DDM.build.Verification.NCoverReporting.config"
+IF %ERRORLEVEL% EQ 3 (
   ECHO "Coverage threshold not met"
 ) ELSE IF %ERRORLEVEL% NEQ 0 (
   ECHO "Ncover reporting failed"
