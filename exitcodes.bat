@@ -4,10 +4,7 @@ ECHO "The ERRORLEVEL IS %ERRORLEVEL%"
 SET ERRORLEVEL=3
 IF %ERRORLEVEL% EQU 3 (
   ECHO "Coverage threshold not met"
-  EXIT %ERRORLEVEL%
-)
-IF %ERRORLEVEL% NEQ 0 (
+) ELSE IF %ERRORLEVEL% NEQ 0 (
   ECHO "Ncover reporting failed"
-  EXIT 1
 )
 ECHO ========== Anaysis of NCover Data finished ==========
