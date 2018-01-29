@@ -1,4 +1,5 @@
 ECHO ========== Start anaysis of NCover Data ==========
+ECHO OFF
 cd "%WORKSPACE%\Binaries\UnitTests"
 ECHO "The ERRORLEVEL IS %ERRORLEVEL%"
 SET ERRORLEVEL=3
