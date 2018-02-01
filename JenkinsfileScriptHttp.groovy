@@ -12,11 +12,10 @@ node() {
             bat 'pipeline/nuget.bat'
         }
         stage('Http get zipfile'){
-            httpRequest(authentication: 'ddmbuildmgr_key',
-                    consoleLogResponseBody: true,
+            httpRequest(consoleLogResponseBody: true,
                     ignoreSslErrors: true,
                     responseHandle: 'NONE',
-                    url: 'https://dfm.delaval.com/LogAnalyzerViewer/FileContent.aspx?filename=/Delpro/log/wcf/Hamra_Parlor/analyzerLog_20180201.zip')
+                    url: 'https://dfm.delaval.com/Delprolog/wcf/Hamra_Parlor/analyzerLog_20180201.zip')
         }
         stage('WrapUp') {
             timestamps {
