@@ -11,7 +11,7 @@ node() {
         stage('NuGet') {
             bat 'pipeline/nuget.bat'
         }
-        stage {
+        stage('Http get zipfile'){
             httpRequest(authentication: 'ddmbuildmgr_key',
                     consoleLogResponseBody: true,
                     customHeaders: [[maskValue: false,
