@@ -12,10 +12,11 @@ node() {
             bat 'pipeline/nuget.bat'
         }
         stage('Http get zipfile'){
-            httpRequest(consoleLogResponseBody: true,
+            httpRequest( outputFile: 'text.txt',
+                    consoleLogResponseBody: true,
                     ignoreSslErrors: true,
                     responseHandle: 'NONE',
-                    url: 'https://dfm.delaval.com/Delprolog/wcf/Hamra_Parlor/analyzerLog_20180201.zip')
+                    url: 'https://dfm.delaval.com/Delprolog/wcf/Hamra_Parlor/analyzerLog_20180130.txt')
         }
         stage('WrapUp') {
             timestamps {
