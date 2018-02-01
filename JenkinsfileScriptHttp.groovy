@@ -14,9 +14,6 @@ node() {
         stage('Http get zipfile'){
             httpRequest(authentication: 'ddmbuildmgr_key',
                     consoleLogResponseBody: true,
-                    customHeaders: [[maskValue: false,
-                                     name: '',
-                                     value: '']],
                     ignoreSslErrors: true,
                     responseHandle: 'NONE',
                     url: 'https://dfm.delaval.com/LogAnalyzerViewer/FileContent.aspx?filename=/Delpro/log/wcf/Hamra_Parlor/analyzerLog_20180201.zip')
