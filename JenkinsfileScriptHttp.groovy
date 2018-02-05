@@ -12,7 +12,7 @@ node() {
             bat 'pipeline/nuget.bat'
         }
         stage('Http get zipfile'){
-            httpRequest( outputFile: 'text.txt',
+            httpRequest( outputFile: 'tempdir/text.txt',
                     consoleLogResponseBody: true,
                     ignoreSslErrors: true,
                     responseHandle: 'NONE',
