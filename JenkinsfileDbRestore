@@ -1,0 +1,63 @@
+node('ddmbuildpc13') {
+
+    try {
+
+        currentBuild.description = "Node: ${env.NODE_NAME}"
+
+        stage('Checkout DDM') {
+            timestamps {
+                checkout scm
+            }
+        }
+
+        stage('Checkout TestDB') {
+            timestamps {
+              dir('ddm_test_databases') {
+                  checkout([$class: 'GitSCM', branches: [[name: '*/master']],
+                           doGenerateSubmoduleConfigurations: false,
+                           extensions: [[$class: 'CloneOption', depth: 0, noTags: true, reference: '', shallow: false, timeout: 100]],
+                           submoduleCfg: [],
+                           userRemoteConfigs: [[credentialsId: '1d900e6f-1189-40bf-9d90-f7aebd839384', url: 'git@git.corp.delaval.com:prod.test/ddm_test_databases.git']]])
+
+                  /* git  credentialsId: '1d900e6f-1189-40bf-9d90-f7aebd839384',
+                       url: 'git@git.corp.delaval.com:prod.test/ddm_test_databases.git',
+                       extensions: [[$class: 'CheckoutOption', timeout: 100]] */
+              }
+            }
+        }
+
+        stage('NuGet') {
+            timestamps {
+                bat 'Build/ciScript/NuGet.bat'
+            }
+        }
+
+        stage('MsBuild') {
+            timestamps {
+                bat 'Build/ciScript/MsBuild.bat "%MSBUILD_PATH%"'
+            }
+        }
+
+        stage('DbRestore') {
+            timestamps {
+                bat '''powershell.exe -NonInteractive -ExecutionPolicy ByPass "& \'%WORKSPACE%\\Build\\DbRestore.ps1\' \'%WORKSPACE%\'"'''
+            }
+        }
+
+        stage('Wrap up') {
+            slackSend channel: "#ddm-jenkins",
+            color: "good",
+            message: "Build success on jenkins: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+        }
+    }
+    catch (err) {
+        currentBuild.result = "FAILURE"
+        mail to: 'martin.blomsterext@delaval.com sebastian.styka@delaval.com stefan.Ragnarssonext@delaval.com',
+        subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+        body: "Something is wrong with ${env.BUILD_URL}"
+
+        slackSend channel: "#ddm-jenkins",
+        color: "danger",
+        message: "Build Failed on jenkins: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+    }
+}

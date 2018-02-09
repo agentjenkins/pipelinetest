@@ -1,0 +1,131 @@
+node() {
+    currentBuild.result = "SUCCESS"
+
+    def isBranchVerification = false;
+    def committerEmail = "";
+
+    try {
+
+        def scmVars
+        stage('Checkout') {
+            scmVars = checkout scm
+        }
+
+        stage('Prepare') {
+            // Special treatment of % Signs escaped with % to handle variable substitution
+            def gitCommand = 'git log --format="%%ae" -n 1 > commit-author.txt'
+            bat gitCommand
+            committerEmail = readFile('commit-author.txt').trim()
+
+            isBranchVerification = !scmVars.GIT_BRANCH.equals("origin/master")
+            def branchMessage = (isBranchVerification ? 'Branch: ' + scmVars.GIT_BRANCH : "")
+
+            currentBuild.description = branchMessage + ' Commit: ' + scmVars.GIT_COMMIT + " Node: ${env.NODE_NAME}"
+
+            // Make soft link to DelPro logs. They will be archived at the end of script.
+            bat 'mklink /d "%WORKSPACE%\\DelPro" c:\\DelPro'
+        }
+
+        stage('NuGet') {
+            timestamps {
+                bat 'Build/ciScript/NuGet.bat'
+            }
+        }
+
+        stage('MsBuild') {
+            timestamps {
+                bat 'Build/ciScript/MsBuild.bat "%MSBUILD_PATH%"'
+            }
+        }
+
+        stage('FxCop') {
+            bat 'Build/ciScript/FxCop.bat'
+        }
+
+        stage('Test') {
+            timestamps {
+                bat '''powershell.exe -NonInteractive -ExecutionPolicy ByPass "& \'%WORKSPACE%\\Build\\VerificationTests.ps1\' \'%WORKSPACE%\'"'''
+            }
+        }
+
+        stage('Ncover') {
+            timestamps {
+                bat 'Build/ciScript/Ncover.bat'
+            }
+        }
+
+        stage('Wrap Up') {
+            warnings(canComputeNew: false,
+                     canResolveRelativePaths: false,
+                     consoleParsers: [[parserName: 'MSBuild']],
+                     parserConfigurations: [[parserName: 'FxCop',
+                     pattern: 'Binaries\\FxCopResults.xml']])
+
+            nunit(healthScaleFactor: 5.0,
+                  testResultsPattern: '\\Binaries\\UnitTests\\*Test.dll.testresult.xml')
+
+            publishHTML([allowMissing: false,
+                alwaysLinkToLastBuild: false,
+                keepAll: true,
+                reportDir: 'Binaries\\UnitTests\\cov_html_report',
+                reportFiles: 'CoverageReport.html',
+                reportName: 'NCover Report', reportTitles: ''
+            ])
+
+            reportResult(isBranchVerification, committerEmail)
+        }
+    } catch (err) {
+        echo err.message
+        currentBuild.result = "FAILURE"
+        reportResult(isBranchVerification, committerEmail)
+    }
+    finally {
+        archiveArtifacts artifacts: 'DelPro/**/*.log', allowEmptyArchive: true
+    }
+}
+
+/**
+ * delegating reporting of build results
+ */
+def reportResult(boolean isBranchVerification, String committerEmail) {
+    reportSlack()
+    reportMail(isBranchVerification, committerEmail)
+}
+
+/**
+ * Notify the build result on slack
+ */
+def reportSlack() {
+    def result = getResult();
+    slackSend(channel: "#ddm-jenkins",
+        color: result.color,
+        message: "Build " + result.stability + " on jenkins: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+}
+
+Map getResult() {
+    switch (currentBuild.result) {
+        case "FAILURE":
+            return [stability: "failed", color: "danger"]
+        case "UNSTABLE":
+            return [stability: "unstable", color: "warning"]
+        default:
+            return [stability: "success", color: "good"]
+    }
+}
+
+/**
+ * Send mail only if build result is UNSTABLE or FAILURE
+ */
+def reportMail(boolean isBranchVerification, String committerEmail) {
+    if (currentBuild.result == "FAILURE" || currentBuild.result == "UNSTABLE") {
+        def recipients = 'martin.blomsterext@delaval.com sebastian.styka@delaval.com stefan.Ragnarssonext@delaval.com'
+        if (isBranchVerification) {
+            recipients = committerEmail
+        }
+
+        println("Sending mail to " + recipients)
+        mail(to: recipients,
+            subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+            body: "Something is wrong with ${env.BUILD_URL}")
+    }
+}
